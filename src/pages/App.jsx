@@ -1,10 +1,16 @@
+import { useState } from "react";
 import Button from "../components/Elements/Button";
 import Input from "../components/Elements/Input";
 import Card from "../components/Fragments/Card";
-// import ModalDelete from "../components/Fragments/ModalDelete";
+import ModalDelete from "../components/Fragments/ModalDelete";
 // import ModalEdit from "../components/Fragments/ModalEdit";
+import init from "../utils/init";
 
 const App = () => {
+  const [datas, setDatas] = useState(init());
+  const [data, setData] = useState([]);
+  const [deleteUser, setDeleteUser] = useState({});
+  const [updateUser, setUpdateUser] = useState({});
   return (
     <div className="max-w-lg mx-auto ">
       <div className="p-4 bg-slate-100">
@@ -14,13 +20,24 @@ const App = () => {
           Add
         </Button>
       </div>
-      {/* <ModalEdit /> */}
-      {/* <ModalDelete /> */}
       <div>
-        <Card>Makan Siang 1</Card>
-        <Card>Makan Siang 2</Card>
-        <Card>Makan Siang 3</Card>
-        <Card>Makan Siang 4</Card>
+        {datas.map((data, index) => (
+          <Card
+            key={data.id}
+            id={data.id}
+            onUpdate={() => setUpdateUser(data)}
+            onDelete={() => setDeleteUser(data)}
+          >
+            {data.name}
+          </Card>
+        ))}
+        {Object.keys(deleteUser).length && (
+          <ModalDelete
+            setDeleteUser={() => setDeleteUser({})}
+            deleteUser={deleteUser}
+          />
+        )}
+        {/* <ModalEdit /> */}
       </div>
     </div>
   );
