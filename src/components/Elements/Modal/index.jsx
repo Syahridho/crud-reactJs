@@ -16,11 +16,8 @@ const Modal = (props) => {
     };
   }, [onClose]);
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen z-50 flex items-center justify-center ">
-      <div
-        className="bg-white p-8 rounded max-w-96 max-h-96 border opacity-100"
-        ref={ref}
-      >
+    <div className="fixed top-0 left-0 w-screen h-screen z-50 flex items-center justify-center bg-slate-100 opacity-75">
+      <div className="bg-white p-8 rounded max-w-96 max-h-96 border" ref={ref}>
         {children}
       </div>
     </div>

@@ -3,13 +3,13 @@ import Button from "../../Elements/Button";
 import Modal from "./../../Elements/Modal";
 
 const ModalDelete = (props) => {
-  const { setDeleteUser, deleteUser } = props;
-  const handleDelete = () => {
-    setDeleteUser({});
-  };
+  const { setDeleteUser, deleteUser, handleDelete } = props;
   return (
     <Modal onClose={setDeleteUser}>
-      <h1 className="text-md font-medium">Yakin ingin Menghapus?</h1>
+      <h1 className="text-md font-medium text-center">
+        Yakin ingin Menghapus?
+      </h1>
+      <p className="text-center">{deleteUser.name}</p>
       <div className="flex justify-between gap-2">
         <Button
           variant="bg-blue-500"
@@ -21,7 +21,9 @@ const ModalDelete = (props) => {
         <Button
           variant="bg-red-500"
           className="w-24 mt-3"
-          onClick={handleDelete}
+          onClick={() => {
+            handleDelete(deleteUser.id), setDeleteUser({});
+          }}
         >
           Delete
         </Button>
@@ -33,6 +35,7 @@ const ModalDelete = (props) => {
 ModalDelete.propTypes = {
   setDeleteUser: PropTypes.func,
   deleteUser: PropTypes.any,
+  handleDelete: PropTypes.func,
 };
 
 export default ModalDelete;
