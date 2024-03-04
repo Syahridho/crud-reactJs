@@ -5,8 +5,8 @@ import Button from "../../Elements/Button";
 const Card = (props) => {
   const { children, id, onDelete, onUpdate } = props;
   return (
-    <div className="flex items-center justify-between py-4 px-4 shadow">
-      <p>{children}</p>
+    <div className="bg-white flex items-center justify-between py-4 px-4 shadow rounded-md ring-1 ring-gray-950/5">
+      <p className="font-medium text-gray-950">{children}</p>
       <div className="flex gap-2">
         <Button variant="bg-blue-500" className="py-2" onClick={onUpdate}>
           <FaEdit />

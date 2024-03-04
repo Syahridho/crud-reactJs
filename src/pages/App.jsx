@@ -24,6 +24,7 @@ const App = () => {
       name: name,
     };
     setDatas([...datas, newData]);
+    setNewData("");
   };
 
   const handleDelete = (id) => {
@@ -44,18 +45,25 @@ const App = () => {
 
   return (
     <div className="max-w-lg mx-auto ">
-      <div className="p-4 bg-slate-100">
-        <h1 className="text-2xl font-bold mb-4">CRUD</h1>
-        <Input name="search" onChange={() => handleChange(event)} />
-        <Button
-          variant="bg-slate-800"
-          className="w-1/5"
-          onClick={() => handleCreate(newData)}
-        >
-          Add
-        </Button>
+      <div className="p-6 bg-white ring-1 ring-gray-950/5 mb-4 rounded-b-xl">
+        <h1 className="text-3xl font-bold mb-4">CRUD</h1>
+        <div className="flex justify-between gap-4">
+          <Input
+            name="search"
+            className="shadow-sm"
+            value={newData.name}
+            onChange={() => handleChange(event)}
+          />
+          <Button
+            variant="bg-slate-800"
+            className="w-1/5"
+            onClick={() => handleCreate(newData)}
+          >
+            Add
+          </Button>
+        </div>
       </div>
-      <div>
+      <div className="flex flex-col gap-2">
         {datas.map((data) => (
           <Card
             key={data.id}

@@ -5,7 +5,7 @@ const Button = (props) => {
   return (
     <button
       type="button"
-      className={`${variant} text-white py-1.5 px-2 rounded shadow ${className}`}
+      className={`${variant} text-white py-1.5 px-2 rounded shadow-md ${className}`}
       onClick={onClick}
     >
       {children}
