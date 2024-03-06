@@ -9,7 +9,7 @@ const ModalDelete = (props) => {
       <h1 className="text-md font-medium text-center">
         Yakin ingin Menghapus?
       </h1>
-      <p className="text-center">{deleteUser.name}</p>
+      <p className="text-center mt-4 mb-6">{deleteUser.name}</p>
       <div className="flex justify-between gap-2">
         <Button
           variant="bg-blue-500"

@@ -39,7 +39,6 @@ const App = () => {
       }
       return data;
     });
-
     setDatas(updateDatas);
   };
 
@@ -51,7 +50,7 @@ const App = () => {
           <Input
             name="search"
             className="shadow-sm"
-            value={newData.name}
+            defaultValue={newData.name}
             onChange={() => handleChange(event)}
           />
           <Button

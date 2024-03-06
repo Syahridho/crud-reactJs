@@ -6,21 +6,27 @@ import { useState } from "react";
 
 const ModalUpdate = (props) => {
   const { setUpdateUser, updateUser, handleUpdate } = props;
-  const [updateData, setUpdateData] = useState({});
+  const [updateData, setUpdateData] = useState({ name: updateUser.name });
 
-  const handleChange = (event) => {
+  const handleChange = (e) => {
     setUpdateData({
-      name: event.target.value,
+      name: e.target.value,
     });
   };
 
+  const handleSubmit = () => {
+    handleUpdate(updateUser.id, updateData.name);
+    setUpdateUser({});
+  };
+
   return (
-    <Modal>
+    <Modal onClose={setUpdateUser}>
+      <h1 className="mb-2 font-semibold">Text</h1>
       <Input
         className="w-full"
-        value={updateUser.name}
         name="update"
-        onChange={() => handleChange(event)}
+        defaultValue={updateData.name}
+        onChange={(e) => handleChange(e)}
       />
       <div className="flex justify-between gap-2">
         <Button
@@ -33,9 +39,7 @@ const ModalUpdate = (props) => {
         <Button
           variant="bg-red-500"
           className="w-24 mt-3"
-          onClick={() => {
-            handleUpdate(updateUser.id, updateData.name), setUpdateUser({});
-          }}
+          onClick={() => handleSubmit()}
         >
           Update
         </Button>
