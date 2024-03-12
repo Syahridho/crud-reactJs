@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Elements/Button";
 import Input from "../components/Elements/Input";
 import Card from "../components/Fragments/Card";
 import ModalDelete from "../components/Fragments/ModalDelete";
 import ModalUpdate from "../components/Fragments/ModalUpdate";
-import init from "../utils/init";
 
 const App = () => {
-  const [datas, setDatas] = useState(init());
-  const [newData, setNewData] = useState("");
+  const [datas, setDatas] = useState(JSON.parse(localStorage.getItem("notes")));
+  const [newData, setNewData] = useState({});
   const [deleteUser, setDeleteUser] = useState({});
   const [updateUser, setUpdateUser] = useState({});
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(datas));
+  }, [datas]);
 
   const handleChange = (event) => {
     setNewData({
@@ -23,8 +26,14 @@ const App = () => {
       id: +new Date(),
       name: name,
     };
-    setDatas([...datas, newData]);
-    setNewData("");
+
+    if (datas) {
+      setDatas([...datas, newData]);
+      setNewData({});
+    } else {
+      setDatas([newData]);
+      setNewData({});
+    }
   };
 
   const handleDelete = (id) => {
@@ -44,14 +53,14 @@ const App = () => {
 
   return (
     <div className="max-w-lg mx-auto ">
-      <div className="p-6 bg-white ring-1 ring-gray-950/5 mb-4 rounded-b-xl">
+      <div className="p-6 bg-white ring-1 ring-gray-950/5 mb-4 rounded-b-xl sticky top-0 shadow-md">
         <h1 className="text-3xl font-bold mb-4">CRUD</h1>
         <div className="flex justify-between gap-4">
           <Input
             name="search"
             className="shadow-sm"
-            defaultValue={newData.name}
-            onChange={() => handleChange(event)}
+            value={newData}
+            onChange={(event) => handleChange(event)}
           />
           <Button
             variant="bg-slate-800"
@@ -63,18 +72,22 @@ const App = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {datas.map((data) => (
-          <Card
-            key={data.id}
-            id={data.id}
-            onUpdate={() => setUpdateUser(data)}
-            onDelete={() => setDeleteUser(data)}
-          >
-            {data.name}
-          </Card>
-        ))}
+        {datas ? (
+          datas.map((data) => (
+            <Card
+              key={data.id}
+              id={data.id}
+              onUpdate={() => setUpdateUser(data)}
+              onDelete={() => setDeleteUser(data)}
+            >
+              {data.name}
+            </Card>
+          ))
+        ) : (
+          <h1 className="text-center text-slate-400">Data Kosong</h1>
+        )}
 
-        {Object.keys(deleteUser).length && (
+        {Object.keys(deleteUser).length > 0 && (
           <ModalDelete
             setDeleteUser={() => setDeleteUser({})}
             deleteUser={deleteUser}
@@ -82,7 +95,7 @@ const App = () => {
           />
         )}
 
-        {Object.keys(updateUser).length && (
+        {Object.keys(updateUser).length > 0 && (
           <ModalUpdate
             setUpdateUser={() => setUpdateUser({})}
             updateUser={updateUser}
