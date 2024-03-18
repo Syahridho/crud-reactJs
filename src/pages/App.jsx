@@ -15,24 +15,21 @@ const App = () => {
     localStorage.setItem("notes", JSON.stringify(datas));
   }, [datas]);
 
-  const handleChange = (event) => {
-    setNewData({
-      name: event.target.value,
-    });
-  };
+  const handleCreate = (event) => {
+    event.preventDefault();
 
-  const handleCreate = ({ name }) => {
     const newData = {
       id: +new Date(),
-      name: name,
+      name: event.target.search.value,
     };
-
     if (datas) {
       setDatas([...datas, newData]);
       setNewData({});
+      event.target.reset();
     } else {
       setDatas([newData]);
       setNewData({});
+      event.target.reset();
     }
   };
 
@@ -55,21 +52,12 @@ const App = () => {
     <div className="max-w-lg mx-auto ">
       <div className="p-6 bg-white ring-1 ring-gray-950/5 mb-4 rounded-b-xl sticky top-0 shadow-md">
         <h1 className="text-3xl font-bold mb-4">CRUD</h1>
-        <div className="flex justify-between gap-4">
-          <Input
-            name="search"
-            className="shadow-sm"
-            value={newData}
-            onChange={(event) => handleChange(event)}
-          />
-          <Button
-            variant="bg-slate-800"
-            className="w-1/5"
-            onClick={() => handleCreate(newData)}
-          >
+        <form className="flex justify-between gap-4" onSubmit={handleCreate}>
+          <Input name="search" className="shadow-sm" value={newData.name} />
+          <Button variant="bg-slate-800" className="w-1/5" type="submit">
             Add
           </Button>
-        </div>
+        </form>
       </div>
       <div className="flex flex-col gap-2">
         {datas ? (

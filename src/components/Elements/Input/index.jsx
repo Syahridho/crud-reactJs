@@ -16,6 +16,7 @@ const Input = (props) => {
       onChange={onChange}
       placeholder={placeholder}
       defaultValue={defaultValue}
+      required
     />
   );
 };
